@@ -30,8 +30,8 @@ function ScrollToTop() {
       onClick={scrollUp}
       style={{
         position: "fixed",
-        bottom: "88px",
-        right: "24px",
+        bottom: "24px",
+        left: "24px",
         zIndex: 9998,
         width: "48px",
         height: "48px",

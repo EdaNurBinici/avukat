@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { GLOBAL_CSS } from "./theme";
+import { GLOBAL_CSS, T } from "./theme";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home     from "./pages/Home";
@@ -8,6 +9,57 @@ import Services from "./pages/Services";
 import Team     from "./pages/Team";
 import Articles from "./pages/Articles";
 import Contact  from "./pages/Contact";
+
+function ScrollToTop() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShow(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollUp = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return show ? (
+    <button
+      onClick={scrollUp}
+      style={{
+        position: "fixed",
+        bottom: "90px",
+        right: "24px",
+        zIndex: 9997,
+        width: "48px",
+        height: "48px",
+        background: T.gold,
+        border: "none",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        fontSize: "1.2rem",
+        boxShadow: "0 4px 16px rgba(200,169,110,0.4)",
+        transition: "transform .25s, box-shadow .25s",
+      }}
+      onMouseOver={(e) => {
+        e.currentTarget.style.transform = "scale(1.1)";
+        e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,169,110,0.5)";
+      }}
+      onMouseOut={(e) => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 4px 16px rgba(200,169,110,0.4)";
+      }}
+      title="Yukarı Çık"
+    >
+      ↑
+    </button>
+  ) : null;
+}
 
 function WAButton() {
   return (
@@ -30,6 +82,7 @@ export default function App() {
   return (
     <div style={{ width:"100%", minHeight:"100vh", overflowX:"hidden" }}>
       <style>{GLOBAL_CSS}</style>
+      <ScrollToTop />
       <WAButton />
       <Navbar />
       <Routes>
